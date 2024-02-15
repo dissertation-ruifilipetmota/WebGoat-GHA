@@ -24,6 +24,7 @@ jobs:
                     distribution: 'temurin'
                     java-version: 11
                     architecture: x64
+                    
             # -   name: Cache Maven packages
             #     uses: actions/cache@v3.3.1
             #     with:
