@@ -22,7 +22,7 @@ jobs:
                 uses: actions/setup-java@v3
                 with:
                     distribution: 'temurin'
-                    java-version: 17
+                    java-version: 11
                     architecture: x64
             # -   name: Cache Maven packages
             #     uses: actions/cache@v3.3.1
