@@ -1,4 +1,4 @@
-name: "Pull requests build"
+name: "Build"
 on:
     push:
         paths-ignore:
@@ -9,7 +9,7 @@ on:
         branches:
             - sat-test-branch
     workflow_dispatch:
-
+        
 jobs:
     pr-build:
         runs-on: ${{ matrix.os }}
