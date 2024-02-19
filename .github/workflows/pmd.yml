@@ -36,7 +36,7 @@ jobs:
         with:
           rulesets: 'rulesets/java/quickstart.xml'
 #          sourcePath: 'src/main/java'
-          sourcePath: 'webgoat-container/src/main/java, webgoat-integration-tests/src/test/java, webgoat-lessons, webgoat-server/src/main/java'
+          sourcePath: ' webgoat-server/src/main/java'
           analyzeModifiedFilesOnly: false
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v2
