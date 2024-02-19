@@ -30,13 +30,21 @@ jobs:
         with:
           java-version: '11'
           distribution: 'temurin'
+      # -   name: Cache Maven packages
+        #     uses: actions/cache@v4.0.0
+        #     with:
+        #         path: ~/.m2
+        #         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        #         restore-keys: ${{ runner.os }}-m2-
+      # - name: Build with Maven
+      #   run: mvn --no-transfer-progress compile
+
       - name: Run PMD
         id: pmd
         uses: pmd/pmd-github-action@v1
         with:
           rulesets: 'rulesets/java/quickstart.xml'
-#          sourcePath: 'src/main/java'
-          sourcePath: 'webgoat-container/src/main/java,webgoat-server/src/main/java'
+          sourcePath: 'webgoat-container/src/main/java,webgoat-integration-tests/src/test/java,webgoat-lessons,webgoat-server/src/main/java'
           analyzeModifiedFilesOnly: false
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v2

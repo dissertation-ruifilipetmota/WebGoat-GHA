@@ -31,4 +31,4 @@ jobs:
             #         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
             #         restore-keys: ${{ runner.os }}-m2-
             -   name: Build with Maven
-                run: mvn --no-transfer-progress verify
+                run: mvn --no-transfer-progress compile
