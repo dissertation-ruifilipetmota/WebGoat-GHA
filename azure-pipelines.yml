@@ -1,0 +1,60 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+
+variables:
+  java.version: '11'  # Specify the desired Java version
+  python.version: '3.x'  # Specify the desired Python version
+
+steps:
+- task: JavaToolInstaller@0
+  inputs:
+    versionSpec: '$(java.version)'
+    jdkArchitectureOption: 'x64'
+    jdkSourceOption: 'PreInstalled'
+  displayName: 'Install Java'
+
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '$(python.version)'
+  displayName: 'Install Python'
+  
+
+- checkout: self
+  lfs: true
+  displayName: 'Self Checkout'
+  
+- script: |
+    git clone https://github.com/ruifilipetmota/webgoat.git
+  displayName: 'Clone WebGoat repository'
+
+- script: |
+    cd webgoat
+    # Build and compile your WebGoat project using Apache Maven
+    mvn compile -f "pom.xml"
+  displayName: 'Compile WebGoat with Maven'
+  failOnStderr: true
+
+- script: |
+    # Install PMD
+    #wget https://github.com/pmd/pmd/releases/download/pmd_releases%2F6.22.0/pmd-bin-6.22.0.zip
+    #unzip pmd-bin-6.22.0.zip
+
+    # Run PMD analysis
+    #./pmd-bin-6.22.0/bin/run.sh pmd -d src/main/java -f text -R rulesets/java/quickstart.xml --failOnViolation false
+    mvn pmd:pmd
+  displayName: 'Run PMD analysis'
+
+- task: PublishPipelineArtifact@1
+  inputs:
+    artifactName: 'pmd-report'
+    targetPath: '$(System.DefaultWorkingDirectory)/target'
+  displayName: 'Publish Pipeline Artifact'
