@@ -31,17 +31,20 @@ steps:
 - checkout: self
   lfs: true
   displayName: 'Self Checkout'
-  
-- script: |
-    git clone https://github.com/ruifilipetmota/webgoat.git
-  displayName: 'Clone WebGoat repository'
+
 
 - script: |
     cd webgoat
     # Build and compile your WebGoat project using Apache Maven
-    mvn compile -f "pom.xml"
-  displayName: 'Compile WebGoat with Maven'
-  failOnStderr: true
+    mvn install --no-transfer-progress
+    mvn --no-transfer-progress compile
+    
+  displayName: 'Install and Compile WebGoat with Maven'
+  failOnStderr: false
+
+- script: |
+    mvn --no-transfer-progress spotbugs:check
+  displayName: 'Run SpotBugs analysis'
 
 - script: |
     # Install PMD
@@ -52,6 +55,7 @@ steps:
     #./pmd-bin-6.22.0/bin/run.sh pmd -d src/main/java -f text -R rulesets/java/quickstart.xml --failOnViolation false
     mvn pmd:pmd
   displayName: 'Run PMD analysis'
+  
 
 - task: PublishPipelineArtifact@1
   inputs:
