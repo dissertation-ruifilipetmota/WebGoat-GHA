@@ -32,3 +32,5 @@ jobs:
             #         restore-keys: ${{ runner.os }}-m2-
             -   name: Build with Maven
                 run: mvn --no-transfer-progress compile
+            -   name: Build with Maven
+                run: mvn --no-transfer-progress spotbugs:check
