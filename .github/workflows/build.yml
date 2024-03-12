@@ -22,8 +22,7 @@ jobs:
                 uses: actions/setup-java@v3
                 with:
                     distribution: 'zulu'
-                    java-version: |
-                        17
+                    java-version: 11
                     architecture: x64
             # -   name: Cache Maven packages
             #     uses: actions/cache@v4.0.0
@@ -31,20 +30,14 @@ jobs:
             #         path: ~/.m2
             #         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
             #         restore-keys: ${{ runner.os }}-m2-
-#            -   name: Mvn install
-#                run: mvn install
-#            -   name: Build with Maven
-#                run: mvn --no-transfer-progress compile
-#            -   name: Spotbugs checkfile:///home/ruiftmota/Downloads/sonarqube-ruifilipetmota.2024-03-11.private-key.pem           
-#                run: mvn --no-transfer-progress spotbugs:check
+            -   name: Mvn install
+                run: mvn install
+            -   name: Build with Maven
+                run: mvn --no-transfer-progress compile
+            -   name: Spotbugs checkfile:///home/ruiftmota/Downloads/sonarqube-ruifilipetmota.2024-03-11.private-key.pem           
+                run: mvn --no-transfer-progress spotbugs:check
 
         #steps:
-#            -   name: Set up JDK 17 for SonarQube
-#                uses: actions/setup-java@v4
-#                with:
-#                    java-version: '17'
-#                    distribution: 'zulu'
-
             -   name: Analyze with SonarQube
                 # You can pin the exact commit or the version.
                 # uses: SonarSource/sonarqube-scan-action@v1.1.0
@@ -57,7 +50,7 @@ jobs:
                     args:
                         # Unique key of your project. You can find it in SonarQube > [my project] > Project Information (top-right menu)
                         # mandatory
-                        -Dsonar.projectKey=
+                        -Dsonar.projectKey= ${{ secrets.WEBGOAT_SONAR_PROJECT_KEY }}
                         # Comma-separated paths to directories containing main source files.
                         #-Dsonar.sources= # optional, default is project base directory
                         # When you need the analysis to take place in a directory other than the one from which it was launched
