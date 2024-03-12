@@ -52,8 +52,10 @@ jobs:
                         # mandatory
                         #-Dsonar.java.binaries=target,webgoat-container/target,webgoat-integration-tests/target,webgoat-lessons/auth-bypass/target,webgoat-lessons/bypass-restrictions/target,webgoat-lessons/challenge/target,webgoat-lessons/chrome-dev-tools/target,webgoat-lessons/cia/target,webgoat-lessons/client-side-filtering/target,webgoat-lessons/cross-site-scripting/target,webgoat-lessons/crypto/target,webgoat-lessons/csrf/target,webgoat-lessons/html-tampering/target,webgoat-lessons/http-basics/target,webgoat-lessons/http-proxies/target,webgoat-lessons/idor/target,webgoat-lessons/insecure-deserialization/target,webgoat-lessons/insecure-login/target,webgoat-lessons/jwt/target,webgoat-lessons/missing-function-ac/target,webgoat-lessons/password-reset/target,webgoat-lessons/secure-passwords/target,webgoat-lessons/sql-injection/target,webgoat-lessons/ssrf/target,webgoat-lessons/vulnerable-components/target,webgoat-lessons/webgoat-introduction/target,webgoat-lessons/webgoat-lesson-template/target,webgoat-lessons/webwolf-introduction/target,webgoat-lessons/xxe/target,webgoat-server/target,webwolf/target
                         #-Dsonar.java.binaries=**/target/
-                        -Dsonar.exclusions=**/*.java,**/*.xml,**/*.properties,**/*.*
+                        -Dsonar.report.export.path=sonar-report.json
+                        -Dsonar.exclusions=**/*.xml,**/*.properties
                         -Dsonar.projectKey=${{ secrets.WEBGOAT_SONAR_PROJECT_KEY }}
+                        #**/*.java,**/*.*
                         # Comma-separated paths to directories containing main source files.
                         #-Dsonar.sources= # optional, default is project base directory
                         # When you need the analysis to take place in a directory other than the one from which it was launched
@@ -62,3 +64,12 @@ jobs:
                         #-Dsonar.tests= # optional. For more info about Code Coverage, please refer to https://docs.sonarcloud.io/enriching/test-coverage/overview/
                         # Adds more detail to both client and server-side analysis logs, activating DEBUG mode for the scanner, and adding client-side environment variables and system properties to the server-side log of analysis report processing.
                         #-Dsonar.verbose= # optional, default is false
+
+            -   name: Convert SonarQube report to SARIF
+                run: |
+                    npx sonarqube-to-sarif sonar-report.json > output.sarif
+
+            -   name: Upload SARIF file
+                uses: github/codeql-action/upload-sarif@v1
+                with:
+                    sarif_file: output.sarif
