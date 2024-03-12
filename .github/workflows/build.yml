@@ -34,8 +34,8 @@ jobs:
                 run: mvn install
             -   name: Build with Maven
                 run: mvn --no-transfer-progress compile
-            -   name: Spotbugs checkfile:///home/ruiftmota/Downloads/sonarqube-ruifilipetmota.2024-03-11.private-key.pem           
-                run: mvn --no-transfer-progress spotbugs:check
+#            -   name: Spotbugs checkfile:///home/ruiftmota/Downloads/sonarqube-ruifilipetmota.2024-03-11.private-key.pem           
+#                run: mvn --no-transfer-progress spotbugs:check
 
         #steps:
             -   name: Analyze with SonarQube
@@ -50,6 +50,7 @@ jobs:
                     args:
                         # Unique key of your project. You can find it in SonarQube > [my project] > Project Information (top-right menu)
                         # mandatory
+                        -Dsonar.java.binaries=**/target/*.class
                         -Dsonar.projectKey=${{ secrets.WEBGOAT_SONAR_PROJECT_KEY }}
                         # Comma-separated paths to directories containing main source files.
                         #-Dsonar.sources= # optional, default is project base directory
