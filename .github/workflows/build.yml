@@ -23,7 +23,6 @@ jobs:
                 with:
                     distribution: 'zulu'
                     java-version: |
-                        11
                         17
                     architecture: x64
             # -   name: Cache Maven packages
