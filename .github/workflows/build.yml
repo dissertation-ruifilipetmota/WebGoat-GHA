@@ -30,22 +30,26 @@ jobs:
             #         path: ~/.m2
             #         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
             #         restore-keys: ${{ runner.os }}-m2-
-            -   name: Mvn install
-                run: mvn install
-            -   name: Build with Maven
-                run: mvn --no-transfer-progress compile
-            -   name: Spotbugs checkfile:///home/ruiftmota/Downloads/sonarqube-ruifilipetmota.2024-03-11.private-key.pem
+#            -   name: Mvn install
+#                run: mvn install
+#            -   name: Build with Maven
+#                run: mvn --no-transfer-progress compile
+#            -   name: Spotbugs checkfile:///home/ruiftmota/Downloads/sonarqube-ruifilipetmota.2024-03-11.private-key.pem
            
-                run: mvn --no-transfer-progress spotbugs:check
+#                run: mvn --no-transfer-progress spotbugs:check
 
         #steps:
             -   name: Set up JDK 17 for SonarQube
                 uses: actions/setup-java@v4
                 with:
-                    java-version: '19'
-                    distribution: 'zulu'
+                    java-version: '17'
+                    distribution: 'adopt'
+
+            -   name: Adjust JAVA_HOME and PATH for SonarScanner
+                run: |
+                    echo "JAVA_HOME=${{ steps.setup-java-17.outputs.java-path }}" >> $GITHUB_ENV
+                    echo "${{ steps.setup-java-17.outputs.java-path }}/bin" >> $GITHUB_PATH
             -   name: Analyze with SonarQube
-       
                 # You can pin the exact commit or the version.
                 # uses: SonarSource/sonarqube-scan-action@v1.1.0
                 uses: SonarSource/sonarqube-scan-action@7295e71c9583053f5bf40e9d4068a0c974603ec8
