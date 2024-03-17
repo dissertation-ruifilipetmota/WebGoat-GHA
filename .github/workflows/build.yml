@@ -55,7 +55,7 @@ jobs:
                         #-Dsonar.java.binaries=.
                         -Dsonar.java.binaries=webwolf/target/classes
                         -Dsonar.exclusions=**/*.xml,**/*.properties
-                        -Dsonar.projectKey=${{ secrets.WEBGOAT_SONAR_PROJECT_KEY }}
+                        -Dsonar.projectKey=${{ vars.WEBGOAT_SONAR_PROJECT_KEY }}
                         
                         # -Dsonar.report.export.path=sonar-report.json
                         #**/*.java,**/*.*
