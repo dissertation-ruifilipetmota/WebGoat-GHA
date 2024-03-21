@@ -31,7 +31,8 @@ jobs:
             #         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
             #         restore-keys: ${{ runner.os }}-m2-
             -   name: Mvn install
-                run: mvn install -DskipTests -Dmaven.test.skip=true -T 1C
+                run: mvn install -DskipTests -Dmaven.test.skip=true
+#                run: mvn install -DskipTests -Dmaven.test.skip=true -T 1C
 #            -   name: Build with Maven
 #                run: mvn --no-transfer-progress compile
 #            -   name: Spotbugs checkfile:///home/ruiftmota/Downloads/sonarqube-ruifilipetmota.2024-03-11.private-key.pem           
