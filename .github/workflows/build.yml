@@ -39,19 +39,31 @@ jobs:
 #                run: mvn --no-transfer-progress spotbugs:check
 
         #steps:
-            -   name: Analyze with SonarQube
+
+            -   name: SonarQube Scan
+                uses: sonarsource/sonarqube-scan-action@master
+                env:
+                    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+                    SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }} 
+                with:
+                    args: 
+                        -Dsonar.projectKey=${{ secrets.WEBGOAT_SONAR_PROJECT_KEY }}  
+                        -Dsonar.java.binaries=./target,./webgoat-container/target,./webgoat-integration-tests/target,./webgoat-lessons/auth-bypass/target,./webgoat-lessons/bypass-restrictions/target,./webgoat-lessons/challenge/target,./webgoat-lessons/chrome-dev-tools/target,./webgoat-lessons/cia/target,./webgoat-lessons/client-side-filtering/target,./webgoat-lessons/cross-site-scripting/target,./webgoat-lessons/crypto/target,./webgoat-lessons/csrf/target,./webgoat-lessons/html-tampering/target,./webgoat-lessons/http-basics/target,./webgoat-lessons/http-proxies/target,./webgoat-lessons/idor/target,./webgoat-lessons/insecure-deserialization/target,./webgoat-lessons/insecure-login/target,./webgoat-lessons/jwt/target,./webgoat-lessons/missing-function-ac/target,./webgoat-lessons/password-reset/target,./webgoat-lessons/secure-passwords/target,./webgoat-lessons/sql-injection/target,./webgoat-lessons/ssrf/target,./webgoat-lessons/vulnerable-components/target,./webgoat-lessons/webgoat-introduction/target,./webgoat-lessons/webgoat-lesson-template/target,./webgoat-lessons/webwolf-introduction/target,./webgoat-lessons/xxe/target,./webgoat-server/target,./webwolf/target
+                        
+
+            #-   name: Analyze with SonarQube
                 # You can pin the exact commit or the version.
                 # uses: SonarSource/sonarqube-scan-action@v1.1.0
-                uses: SonarSource/sonarqube-scan-action@master
-                env:
-                    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}   # Generate a token on SonarQube, add it to the secrets of this repo with the name SONAR_TOKEN (Settings > Secrets > Actions > add new repository secret)
-                    SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}   # add the URL of your instance to the secrets of this repo with the name SONAR_HOST_URL (Settings > Secrets > Actions > add new repository secret)
-                with:
+            #    uses: SonarSource/sonarqube-scan-action@master
+            #    env:
+            #        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}   # Generate a token on SonarQube, add it to the secrets of this repo with the name SONAR_TOKEN (Settings > Secrets > Actions > add new repository secret)
+            #        SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}   # add the URL of your instance to the secrets of this repo with the name SONAR_HOST_URL (Settings > Secrets > Actions > add new repository secret)
+                #with:
                 # Additional arguments for the sonarcloud scanner
-                    args:
-                        -Dsonar.java.binaries=webwolf/target/classes
-                        -Dsonar.exclusions=**/*.xml,**/*.properties
-                        -Dsonar.projectKey=${{ vars.WEBGOAT_SONAR_PROJECT_KEY }}
+                    #args:
+                        #-Dsonar.java.binaries=webwolf/target/classes
+                        #-Dsonar.exclusions=**/*.xml,**/*.properties
+                        #-Dsonar.projectKey=${{ vars.WEBGOAT_SONAR_PROJECT_KEY }}
                         # Unique key of your project. You can find it in SonarQube > [my project] > Project Information (top-right menu)
                         # mandatory
                         #-Dsonar.java.binaries=target,webgoat-container/target,webgoat-integration-tests/target,webgoat-lessons/auth-bypass/target,webgoat-lessons/bypass-restrictions/target,webgoat-lessons/challenge/target,webgoat-lessons/chrome-dev-tools/target,webgoat-lessons/cia/target,webgoat-lessons/client-side-filtering/target,webgoat-lessons/cross-site-scripting/target,webgoat-lessons/crypto/target,webgoat-lessons/csrf/target,webgoat-lessons/html-tampering/target,webgoat-lessons/http-basics/target,webgoat-lessons/http-proxies/target,webgoat-lessons/idor/target,webgoat-lessons/insecure-deserialization/target,webgoat-lessons/insecure-login/target,webgoat-lessons/jwt/target,webgoat-lessons/missing-function-ac/target,webgoat-lessons/password-reset/target,webgoat-lessons/secure-passwords/target,webgoat-lessons/sql-injection/target,webgoat-lessons/ssrf/target,webgoat-lessons/vulnerable-components/target,webgoat-lessons/webgoat-introduction/target,webgoat-lessons/webgoat-lesson-template/target,webgoat-lessons/webwolf-introduction/target,webgoat-lessons/xxe/target,webgoat-server/target,webwolf/target
