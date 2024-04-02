@@ -49,6 +49,13 @@ jobs:
                     find . -type d -name "target" | grep -v "/\." | sed 's|^./||'
 
         #steps:
+            -   name: SonarQube Scan
+                uses: kitabisa/sonarqube-action@master
+                with:
+                    host: ${{ vars.SONAR_HOST_URL }}
+                    login: ${{ secrets.SONAR_TOKEN }}
+                    projectBaseDir: "src/"
+                    projectKey: ${{ secrets.WEBGOAT_SONAR_PROJECT_KEY }}  
 
             -   name: SonarQube Scan
                 uses: sonarsource/sonarqube-scan-action@master
