@@ -44,6 +44,10 @@ jobs:
                 run: |
                     ls -R
 
+            -   name: List Target Directories
+                run: |
+                    find . -type d -name "target" | grep -v "/\." | sed 's|^./||'
+
         #steps:
 
             -   name: SonarQube Scan
