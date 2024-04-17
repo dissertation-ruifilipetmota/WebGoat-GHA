@@ -10,8 +10,13 @@ on:
         branches:
             - main
 
+permissions:
+    pull-requests: read # allows SonarQube to decorate PRs with analysis results
+
 jobs:
     build:
+        permissions:
+            security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
         runs-on: ${{ matrix.os }}
         strategy:
             matrix:
