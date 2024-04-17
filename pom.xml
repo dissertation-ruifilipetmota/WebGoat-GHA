@@ -206,6 +206,7 @@
                 </dependencies>
                 <configuration>
                     <failOnError>false</failOnError>
+                    <includeTests>false</includeTests>
                   </configuration>
               </plugin>
 
