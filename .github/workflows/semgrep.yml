@@ -38,5 +38,12 @@ jobs:
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: semgrep-report.sarif
-    
+
+
+
+      - name: Upload Semgrep report
+        uses: actions/upload-artifact@v2
+        with:
+          sarif_file: semgrep-report.sarif
+          path: semgrep-report.sarif
 
